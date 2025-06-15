@@ -1,11 +1,8 @@
 package academy.devdojo.springboot2.repository;
 
 import academy.devdojo.springboot2.domain.Anime;
-
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 // CONEXAO COM O BANCO DE DADOS (QUERIES)
-public interface AnimeRepository {
-    // private final AnimeRepository animeRepository;
-    List<Anime> listAll();
+public interface AnimeRepository extends JpaRepository<Anime, Long> {
 }
