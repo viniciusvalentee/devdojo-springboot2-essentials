@@ -20,24 +20,24 @@ import java.util.List;
 @Log4j2
 @RequiredArgsConstructor
 public class AnimeController {
+
     private final DateUtil dateUtil;
     private final AnimeService animeService;
 
-    //localhost:8080/anime/list
     @GetMapping
     public ResponseEntity<List<Anime>> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return ResponseEntity.ok(animeService.listAll());// Retorna 200 OK
+        return ResponseEntity.ok(animeService.listAll());
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable long id) {
-        return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));// Retorna 200 OK
+        return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
-    @GetMapping(path = "/{name}")
+    @GetMapping(path = "/search")
     public ResponseEntity<List<Anime>> findByName(@RequestParam String name) {
-        return ResponseEntity.ok(animeService.findByName(name));// Retorna 200 OK
+        return ResponseEntity.ok(animeService.findByName(name));
     }
 
     @PostMapping
@@ -45,15 +45,15 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable long id) {
-        animeService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);// Retorna 204 NO CONTENT
-    }
-
     @PutMapping
     public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
         animeService.replace(animePutRequestBody);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);// Retorna 204 NO CONTENT
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        animeService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
